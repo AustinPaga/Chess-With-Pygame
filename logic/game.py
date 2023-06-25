@@ -1,13 +1,15 @@
 import random
 import pygame
-import instantiate_pieces
-import promotion
 import time
-import pawn_moves
-import knight_moves
 import bishop_moves
-import rook_moves
+import check
+import instantiate_pieces
+import king_moves
+import knight_moves
+import pawn_moves
+import promotion
 import queen_moves
+import rook_moves
 
 all_pieces = {}
 white_pieces = []
@@ -20,14 +22,12 @@ captured_black_pieces = {"Pawn": 0, "Knight": 0, "Bishop": 0, "Rook": 0, "Queen"
 tile_size = 32
 board_pos = (200, 50)
 
-
 def create_board_surf():
     board_surf = pygame.Surface((tile_size * 8, tile_size * 8))
     for boardNum in range(64):
         rect = pygame.Rect(boardNum % 8 * tile_size, boardNum // 8 * tile_size, tile_size, tile_size)
         pygame.draw.rect(board_surf, pygame.Color("grey" if (boardNum % 2 == 1 and boardNum // 8 % 2 == 1) or (boardNum % 2 == 0 and boardNum // 8 % 2 == 0) else "white"), rect)
     return board_surf
-
 
 def get_square_under_mouse(board):
     mouse_pos = pygame.Vector2(pygame.mouse.get_pos()) - pygame.Vector2(board_pos)
@@ -39,7 +39,6 @@ def get_square_under_mouse(board):
         pass
     return None, None, None
 
-
 def create_board():
     board = []
     for y in range(8):
@@ -47,7 +46,6 @@ def create_board():
         for x in range(8):
             board[y].append(None)
     return board
-
 
 def draw_pieces(game_display, board):
     for y in range(8):
@@ -57,7 +55,6 @@ def draw_pieces(game_display, board):
                 pos = pygame.Rect(board_pos[0] + x * tile_size - 1, board_pos[1] + y * tile_size - 1, tile_size,
                                   tile_size)
                 game_display.blit(piece, piece.get_rect(center=pos.center).move(1, 1))
-
 
 def drag(game_display, board, selected_piece):
     if selected_piece:
@@ -75,7 +72,6 @@ def drag(game_display, board, selected_piece):
             y, x = selected_piece[1], selected_piece[2]
         return y, x
 
-
 def list_white_and_black_pieces(board):
     for i in instantiate_pieces.instantiate_white_pieces(board):
         white_piece_objects.append(i)
@@ -85,7 +81,6 @@ def list_white_and_black_pieces(board):
         black_piece_objects.append(i)
         black_pieces.append(getattr(i, "piece"))
         all_pieces[getattr(i, "piece")] = [[], False]
-
 
 def list_all_legal_moves(board):
     for key in all_pieces:
@@ -117,7 +112,6 @@ def list_all_legal_moves(board):
         if get_moves:
             all_pieces[getattr(key, "piece")][0] = get_moves
 
-
 def en_passant(piece, board, new_y, new_x, old_y, old_x):
     if piece in white_pieces and 0 <= white_pieces.index(piece) < 8:
         if not board[new_y][new_x] and abs(old_y - new_y) == 1 and abs(old_x - new_x) == 1:
@@ -138,7 +132,6 @@ def en_passant(piece, board, new_y, new_x, old_y, old_x):
         else:
             all_pieces[piece][1] = False
 
-
 def castles(piece, board, new_y, new_x, old_y, old_x):
     if piece == instantiate_pieces.blackKing0 or piece == instantiate_pieces.whiteKing0:
         if new_x - old_x == 2:
@@ -148,7 +141,6 @@ def castles(piece, board, new_y, new_x, old_y, old_x):
             board[new_y][new_x + 1] = board[new_y][new_x - 2]
             board[new_y][new_x - 2] = None
 
-
 def pawn_promotion(board):
     for i in range(8):
         for h in range(8):
@@ -157,7 +149,6 @@ def pawn_promotion(board):
                 promotion.instantiate_promoted_pieces("white", "queen", all_pieces, white_pieces, black_pieces, white_piece_objects, black_piece_objects, board, 0, i)
             elif board[7][i] == black_pieces[h]:
                 promotion.instantiate_promoted_pieces("black", "queen", all_pieces, white_pieces, black_pieces, white_piece_objects, black_piece_objects, board, 7, i)
-
 
 def move_and_capture(board, drop_pos, selected_piece):
     piece, old_y, old_x = selected_piece
@@ -193,7 +184,6 @@ def move_and_capture(board, drop_pos, selected_piece):
     if (piece in black_pieces and 12 <= black_pieces.index(piece) <= 14) or (piece in white_pieces and 12 <= white_pieces.index(piece) <= 14):
         all_pieces[piece][1] = True
 
-
 def white_computer_turn(board):
     pick_again = True
     while pick_again:
@@ -213,7 +203,6 @@ def white_computer_turn(board):
             move_and_capture(board, drop_pos, selected_piece)
             list_all_legal_moves(board)
             pick_again = False
-
 
 def has_white_won(board):
     winner = False
@@ -260,7 +249,6 @@ def black_computer_turn(board):
             list_all_legal_moves(board)
             pick_again = False
 
-
 def has_black_won(board):
     winner = False
     wh_is_checked = False
@@ -285,7 +273,6 @@ def has_black_won(board):
         white_is_stalemated = True
     return winner, white_is_stalemated
 
-
 def update_board(board, gameDisplay, board_surf, clock):
     gameDisplay.fill(pygame.Color("grey"))
     gameDisplay.blit(board_surf, board_pos)
@@ -293,7 +280,6 @@ def update_board(board, gameDisplay, board_surf, clock):
     pygame.display.flip()
     clock.tick(60)
     time.sleep(0)
-
 
 def white_user_click(gameDisplay, board, selected_piece, drop_pos, board_surf, clock):
     not_moved = True
@@ -322,7 +308,6 @@ def white_user_click(gameDisplay, board, selected_piece, drop_pos, board_surf, c
         pygame.display.flip()
         clock.tick(60)
 
-
 def black_user_click(gameDisplay, board, selected_piece, drop_pos, board_surf, clock):
     not_moved = True
     while not_moved:
@@ -349,7 +334,6 @@ def black_user_click(gameDisplay, board, selected_piece, drop_pos, board_surf, c
         drop_pos = drag(gameDisplay, board, selected_piece)
         pygame.display.flip()
         clock.tick(60)
-
 
 def main():
     pygame.init()
@@ -386,7 +370,6 @@ def main():
         print("White is Victorious!")
     elif black_wins:
         print("Black is Victorious!")
-
 
 if __name__ == "__main__":
     main()

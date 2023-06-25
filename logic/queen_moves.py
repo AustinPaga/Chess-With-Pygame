@@ -1,8 +1,7 @@
 import check
 import pygame
 
-
-class Rooks:
+class Queens:
     def __init__(self, board, piece, x, y):
         self.board = board
         self.piece = piece
@@ -16,64 +15,109 @@ class Rooks:
                 self.x = b.index(self.piece)
 
     def legal_moves(self, white_pieces, black_pieces, all_pieces, board):
-        rook_legal_moves = []
+        queen_legal_moves = []
         not_blocked0 = True
         not_blocked1 = True
         not_blocked2 = True
         not_blocked3 = True
+        not_blocked4 = True
+        not_blocked5 = True
+        not_blocked6 = True
+        not_blocked7 = True
 
         for c in range(1, 8):
-
             if self.piece in white_pieces:
-                if self.y + c < 8:
-                    if not_blocked0 and board[self.y + c][self.x] not in white_pieces:
-                        rook_legal_moves.append((self.y + c, self.x))
-                    if board[self.y + c][self.x] in white_pieces or board[self.y + c][self.x] in black_pieces:
+                if self.y + c < 8 and self.x + c < 8:
+                    if not_blocked0 and board[self.y + c][self.x + c] not in white_pieces:
+                        queen_legal_moves.append((self.y + c, self.x + c))
+                    if board[self.y + c][self.x + c] in white_pieces or board[self.y + c][self.x + c] in black_pieces:
                         not_blocked0 = False
-                if self.y - c > -1:
-                    if not_blocked1 and board[self.y - c][self.x] not in white_pieces:
-                        rook_legal_moves.append((self.y - c, self.x))
-                    if board[self.y - c][self.x] in white_pieces or board[self.y - c][self.x] in black_pieces:
+                if self.y - c > -1 and self.x + c < 8:
+                    if not_blocked1 and board[self.y - c][self.x + c] not in white_pieces:
+                        queen_legal_moves.append((self.y - c, self.x + c))
+                    if board[self.y - c][self.x + c] in white_pieces or board[self.y - c][self.x + c] in black_pieces:
                         not_blocked1 = False
-                if self.x - c > -1:
-                    if not_blocked2 and board[self.y][self.x - c] not in white_pieces:
-                        rook_legal_moves.append((self.y, self.x - c))
-                    if board[self.y][self.x - c] in white_pieces or board[self.y][self.x - c] in black_pieces:
+                if self.y + c < 8 and self.x - c > -1:
+                    if not_blocked2 and board[self.y + c][self.x - c] not in white_pieces:
+                        queen_legal_moves.append((self.y + c, self.x - c))
+                    if board[self.y + c][self.x - c] in white_pieces or board[self.y + c][self.x - c] in black_pieces:
                         not_blocked2 = False
-                if self.x + c < 8:
-                    if not_blocked3 and board[self.y][self.x + c] not in white_pieces:
-                        rook_legal_moves.append((self.y, self.x + c))
-                    if board[self.y][self.x + c] in white_pieces or board[self.y][self.x + c] in black_pieces:
+                if self.y - c > -1 and self.x - c > -1:
+                    if not_blocked3 and board[self.y - c][self.x - c] not in white_pieces:
+                        queen_legal_moves.append((self.y - c, self.x - c))
+                    if board[self.y - c][self.x - c] in white_pieces or board[self.y - c][self.x - c] in black_pieces:
                         not_blocked3 = False
+                if self.y + c < 8:
+                    if not_blocked4 and board[self.y + c][self.x] not in white_pieces:
+                        queen_legal_moves.append((self.y + c, self.x))
+                    if board[self.y + c][self.x] in white_pieces or board[self.y + c][self.x] in black_pieces:
+                        not_blocked4 = False
+                if self.y - c > -1:
+                    if not_blocked5 and board[self.y - c][self.x] not in white_pieces:
+                        queen_legal_moves.append((self.y - c, self.x))
+                    if board[self.y - c][self.x] in white_pieces or board[self.y - c][self.x] in black_pieces:
+                        not_blocked5 = False
+                if self.x - c > -1:
+                    if not_blocked6 and board[self.y][self.x - c] not in white_pieces:
+                        queen_legal_moves.append((self.y, self.x - c))
+                    if board[self.y][self.x - c] in white_pieces or board[self.y][self.x - c] in black_pieces:
+                        not_blocked6 = False
+                if self.x + c < 8:
+                    if not_blocked7 and board[self.y][self.x + c] not in white_pieces:
+                        queen_legal_moves.append((self.y, self.x + c))
+                    if board[self.y][self.x + c] in white_pieces or board[self.y][self.x + c] in black_pieces:
+                        not_blocked7 = False
 
             elif self.piece in black_pieces:
-                if self.y + c < 8:
-                    if not_blocked0 and board[self.y + c][self.x] not in black_pieces:
-                        rook_legal_moves.append((self.y + c, self.x))
-                    if board[self.y + c][self.x] in white_pieces or board[self.y + c][self.x] in black_pieces:
+                if self.y + c < 8 and self.x + c < 8:
+                    if not_blocked0 and board[self.y + c][self.x + c] not in black_pieces:
+                        queen_legal_moves.append((self.y + c, self.x + c))
+                    if board[self.y + c][self.x + c] in white_pieces or board[self.y + c][self.x + c] in black_pieces:
                         not_blocked0 = False
-                if self.y - c > -1:
-                    if not_blocked1 and board[self.y - c][self.x] not in black_pieces:
-                        rook_legal_moves.append((self.y - c, self.x))
-                    if board[self.y - c][self.x] in white_pieces or board[self.y - c][self.x] in black_pieces:
+                if self.y - c > -1 and self.x + c < 8:
+                    if not_blocked1 and board[self.y - c][self.x + c] not in black_pieces:
+                        queen_legal_moves.append((self.y - c, self.x + c))
+                    if board[self.y - c][self.x + c] in white_pieces or board[self.y - c][self.x + c] in black_pieces:
                         not_blocked1 = False
-                if self.x - c > -1:
-                    if not_blocked2 and board[self.y][self.x - c] not in black_pieces:
-                        rook_legal_moves.append((self.y, self.x - c))
-                    if board[self.y][self.x - c] in white_pieces or board[self.y][self.x - c] in black_pieces:
+                if self.y + c < 8 and self.x - c > -1:
+                    if not_blocked2 and board[self.y + c][self.x - c] not in black_pieces:
+                        queen_legal_moves.append((self.y + c, self.x - c))
+                    if board[self.y + c][self.x - c] in white_pieces or board[self.y + c][self.x - c] in black_pieces:
                         not_blocked2 = False
-                if self.x + c < 8:
-                    if not_blocked3 and board[self.y][self.x + c] not in black_pieces:
-                        rook_legal_moves.append((self.y, self.x + c))
-                    if board[self.y][self.x + c] in white_pieces or board[self.y][self.x + c] in black_pieces:
+                if self.y - c > -1 and self.x - c > -1:
+                    if not_blocked3 and board[self.y - c][self.x - c] not in black_pieces:
+                        queen_legal_moves.append((self.y - c, self.x - c))
+                    if board[self.y - c][self.x - c] in white_pieces or board[self.y - c][self.x - c] in black_pieces:
                         not_blocked3 = False
+                if self.y + c < 8:
+                    if not_blocked4 and board[self.y + c][self.x] not in black_pieces:
+                        queen_legal_moves.append((self.y + c, self.x))
+                    if board[self.y + c][self.x] in white_pieces or board[self.y + c][self.x] in black_pieces:
+                        not_blocked4 = False
+                if self.y - c > -1:
+                    if not_blocked5 and board[self.y - c][self.x] not in black_pieces:
+                        queen_legal_moves.append((self.y - c, self.x))
+                    if board[self.y - c][self.x] in white_pieces or board[self.y - c][self.x] in black_pieces:
+                        not_blocked5 = False
+                if self.x - c > -1:
+                    if not_blocked6 and board[self.y][self.x - c] not in black_pieces:
+                        queen_legal_moves.append((self.y, self.x - c))
+                    if board[self.y][self.x - c] in white_pieces or board[self.y][self.x - c] in black_pieces:
+                        not_blocked6 = False
+                if self.x + c < 8:
+                    if not_blocked7 and board[self.y][self.x + c] not in black_pieces:
+                        queen_legal_moves.append((self.y, self.x + c))
+                    if board[self.y][self.x + c] in white_pieces or board[self.y][self.x + c] in black_pieces:
+                        not_blocked7 = False
 
-        return rook_legal_moves
+        return queen_legal_moves
 
-    def getOutOfCheck(self, board, get_original_moves, all_pieces, white_pieces, black_pieces, white_piece_objects, black_piece_objects):
+    def getOutOfCheck(self, board, get_original_moves, all_pieces, white_pieces, black_pieces, white_piece_objects,
+                      black_piece_objects):
         new_moves = []
         if get_original_moves:
             for position in get_original_moves:
+
                 # create a new board and dictionary for all the pieces to simulate with
                 dummy_dict = {}
                 dummy_board = [[None, None, None, None, None, None, None, None],
@@ -104,7 +148,6 @@ class Rooks:
                 # simulate captures
                 dummy_board[old_y][old_x] = None
                 dummy_board[new_y][new_x] = piece
-                dummy_dict[piece][1] = True
 
                 # simulate getting all the pieces' legal moves
                 for key in dummy_dict:

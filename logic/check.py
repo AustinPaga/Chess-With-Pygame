@@ -1,4 +1,3 @@
-
 def checkIfChecked(all_pieces, board, white_pieces, black_pieces):
     blackInCheck = False
     whiteInCheck = False
@@ -216,7 +215,6 @@ def rook_legality(piece, white_pieces, black_pieces, board, x, y):
     not_blocked3 = True
 
     for c in range(1, 8):
-
         if piece in white_pieces:
             if y + c < 8:
                 if not_blocked0 and board[y + c][x] not in white_pieces:

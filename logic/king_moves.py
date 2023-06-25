@@ -2,7 +2,6 @@ import check
 import pygame
 
 class Kings:
-
     def __init__(self, board, piece, x, y):
         self.board = board
         self.piece = piece

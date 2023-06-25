@@ -4,7 +4,6 @@ import bishop_moves
 import rook_moves
 import queen_moves
 
-
 whiteKnight2 = pygame.transform.scale(pygame.transform.flip(pygame.image.load('chess_pieces/WhiteKnight.png'), True, False), (26, 26))
 whiteKnight3 = pygame.transform.scale(pygame.transform.flip(pygame.image.load('chess_pieces/WhiteKnight2.png'), True, False), (26, 26))
 whiteKnight4 = pygame.transform.scale(pygame.transform.flip(pygame.image.load('chess_pieces/WhiteKnight.png'), True, False), (26, 26))
